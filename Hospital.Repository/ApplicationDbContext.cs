@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Hospital.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hospital.Repository
@@ -9,5 +10,6 @@ namespace Hospital.Repository
         {
             
         }
+        public DbSet<tbl_User> tbl_Users { get; set; }
     }
 }
