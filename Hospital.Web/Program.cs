@@ -42,7 +42,21 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{Area=Patient}/{controller=Home}/{action=Index}/{id?}");
 
+//app.UseEndpoints(endpoints =>
+//{
+//    endpoints.MapAreaControllerRoute(
+//        name: "areas",
+//        areaName: "YourAreaName",
+//        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+//    );
 
+//    endpoints.MapControllerRoute(
+//        name: "default",
+//        pattern: "{controller=Home}/{action=Index}/{id?}"
+//    );
+
+//    endpoints.MapRazorPages();
+//});
 app.Run();
 
 void DataSedding()
