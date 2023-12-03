@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Hospital.Models;
 using Hospital.Repository;
 using Microsoft.AspNetCore.Identity;
@@ -46,7 +47,7 @@ namespace Hospital.Utilities
 
                 _userManager.CreateAsync(new tbl_User
                 {
-                    UserName = "Mehrdad",
+                    UserName = "l2aiin",
                     Email = "l2aiin@yahoo.com"
                 }, "zx7997op??").GetAwaiter().GetResult();
                 var appUser = _context.tbl_Users.FirstOrDefault(x => x.Email == "l2aiin@yahoo.com");
@@ -55,6 +56,30 @@ namespace Hospital.Utilities
                     _userManager.AddToRoleAsync(appUser, WebSiteRoles.WebSite_Admin).GetAwaiter().GetResult();
                 }
             }
+
+            var defaultUser = _context.tbl_Users.FirstOrDefault(x => x.Email == "l2aiin@yahoo.com");
+            if (defaultUser == null)
+            {
+                var user = new tbl_User()
+                {
+                    UserName = "l2aiin",
+                    Email = "l2aiin@yahoo.com"
+                };
+                const string defaultPassword = "ZX7997op??";
+
+                var result =   _userManager.CreateAsync(user, defaultPassword);
+                if (result.Result.Succeeded)
+                {
+                     _userManager.AddToRoleAsync(user, WebSiteRoles.WebSite_Admin);
+
+                }
+                else
+                {
+                    throw new Exception($"Error creating default user: {result.Result.Errors.FirstOrDefault()?.Description}");
+                }
+            }
+
+
         }
     } 
 }

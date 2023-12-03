@@ -31,32 +31,42 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+DataSedding();
 app.UseRouting();
 app.UseAuthentication();;
 
 app.UseAuthorization();
 app.MapRazorPages();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{Area=Patient}/{controller=Home}/{action=Index}/{id?}");
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{Area=Patient}/{controller=Home}/{action=Index}/{id?}");
 
-//app.UseEndpoints(endpoints =>
-//{
-//    endpoints.MapAreaControllerRoute(
-//        name: "areas",
-//        areaName: "YourAreaName",
-//        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-//    );
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapAreaControllerRoute(
+        name: "areas",
+        areaName: "Patient",
+        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    );
+    endpoints.MapAreaControllerRoute(
+        name: "areas",
+        areaName: "Admin",
+        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    );
+    endpoints.MapAreaControllerRoute(
+        name: "areas",
+        areaName: "Doctor",
+        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    );
 
-//    endpoints.MapControllerRoute(
-//        name: "default",
-//        pattern: "{controller=Home}/{action=Index}/{id?}"
-//    );
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}"
+    );
 
-//    endpoints.MapRazorPages();
-//});
+    endpoints.MapRazorPages();
+});
 app.Run();
 
 void DataSedding()
