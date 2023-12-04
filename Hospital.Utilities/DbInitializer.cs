@@ -50,14 +50,14 @@ namespace Hospital.Utilities
                     UserName = "l2aiin",
                     Email = "l2aiin@yahoo.com"
                 }, "zx7997op??").GetAwaiter().GetResult();
-                var appUser = _context.tbl_Users.FirstOrDefault(x => x.Email == "l2aiin@yahoo.com");
+                var appUser = _context.Users.FirstOrDefault(x => x.Email == "l2aiin@yahoo.com");
                 if (appUser != null)
                 {
                     _userManager.AddToRoleAsync(appUser, WebSiteRoles.WebSite_Admin).GetAwaiter().GetResult();
                 }
             }
 
-            var defaultUser = _context.tbl_Users.FirstOrDefault(x => x.Email == "l2aiin@yahoo.com");
+            var defaultUser = _context.Users.FirstOrDefault(x => x.Email == "l2aiin@yahoo.com");
             if (defaultUser == null)
             {
                 var user = new tbl_User()
