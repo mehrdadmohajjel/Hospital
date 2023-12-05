@@ -12,8 +12,8 @@ namespace Hospital.Models.Hospital
     {
         [Key]
         public long Id { get; set; }
-        public Nullable<long> HospitalId { get; set; }
-        public Nullable<long> DepartmentId { get; set; }
+        public long? HospitalId { get; set; }
+        public long? DepartmentId { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
         public string ContactName { get; set; }

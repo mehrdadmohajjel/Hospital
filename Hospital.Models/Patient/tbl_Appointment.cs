@@ -11,12 +11,12 @@ namespace Hospital.Models.Patient
     {
         [Key]
         public long Id { get; set; }
-        public Nullable<long> DepartmentId { get; set; }
-        public Nullable<long> DoctorId { get; set; }
+        public long? DepartmentId { get; set; }
+        public String DoctorId { get; set; }
         public string Number { get; set; }
-        public Nullable<System.DateTime> CreateionDate { get; set; }
+        public System.DateTime? CreateionDate { get; set; }
         public string Description { get; set; }
-        public Nullable<long> PatientId { get; set; }
+        public String PatientId { get; set; }
 
         public virtual tbl_Department tbl_Department { get; set; }
         public virtual tbl_User tbl_User { get; set; }

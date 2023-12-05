@@ -32,7 +32,36 @@ namespace Hospital.Repository
         public DbSet<tbl_States> tbl_States { get; set; }
         public DbSet<tbl_Supplier> tbl_Supplier { get; set; }
         public DbSet<tbl_User> tbl_User { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<tbl_PayRoll>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                // Configure other properties as needed
+
+                entity.HasOne(e => e.Employee)
+                    .WithMany(u => u.EmployeePayRolls)
+                    .HasForeignKey(e => e.EmployeeId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(e => e.User)
+                    .WithMany(u => u.UserPayRolls)
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+
+            modelBuilder.Entity<tbl_Department>()
+                .HasOne(d => d.Parent)
+                .WithMany(d => d.Children)
+                .HasForeignKey(d => d.ParentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+        }
 
     }
+
 
 }

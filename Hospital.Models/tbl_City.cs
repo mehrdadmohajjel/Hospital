@@ -13,7 +13,6 @@ namespace Hospital.Models
         public long Id { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
-        public long StateId { get; set; }
 
         public tbl_States State { get; set; }
         public virtual ICollection<tbl_Hospital> tbl_Hospital { get; set; }

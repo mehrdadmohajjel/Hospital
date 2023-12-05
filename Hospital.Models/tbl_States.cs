@@ -13,7 +13,6 @@ namespace Hospital.Models
         public string Name { get; set; }
 
         // Foreign key property
-        public int CountryId { get; set; }
 
         // Navigation properties
         public tbl_Country Country { get; set; }

@@ -10,7 +10,6 @@ namespace Hospital.Models
         public string Email { get; set; }
         public string Mobile { get; set; }
         public string Address { get; set; }
-        public Nullable<long> CityId { get; set; }
 
         public tbl_City tbl_City { get; set; }
 

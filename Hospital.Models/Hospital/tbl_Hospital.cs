@@ -12,8 +12,8 @@ namespace Hospital.Models.Hospital
         [Key]
         public long Id { get; set; }
         public string Name { get; set; }
-        public Nullable<long> HospitalTypeId { get; set; }
-        public Nullable<long> CityId { get; set; }
+        public long? HospitalTypeId { get; set; }
+        public long? CityId { get; set; }
         public string Address { get; set; }
 
         public  tbl_City tbl_City { get; set; }

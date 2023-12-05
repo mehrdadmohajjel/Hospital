@@ -11,16 +11,16 @@ namespace Hospital.Models
     {
         [Key]
         public long Id { get; set; }
-        public Nullable<decimal> Salary { get; set; }
-        public Nullable<decimal> NetSalary { get; set; }
-        public Nullable<decimal> HourlySalary { get; set; }
-        public Nullable<decimal> BounusSalary { get; set; }
-        public Nullable<decimal> Compenstion { get; set; }
+        public decimal? Salary { get; set; }
+        public decimal? NetSalary { get; set; }
+        public decimal? HourlySalary { get; set; }
+        public decimal? BounusSalary { get; set; }
+        public decimal? Compenstion { get; set; }
         public string AccountNumber { get; set; }
-        public Nullable<long> EmployeeId { get; set; }
-        public Nullable<long> UserId { get; set; }
+        public String EmployeeId { get; set; }
+        public String UserId { get; set; }
 
-        public virtual tbl_User tbl_User { get; set; }
-        public virtual tbl_User tbl_User1 { get; set; }
+        public virtual tbl_User Employee { get; set; }
+        public virtual tbl_User User { get; set; }
     }
 }
