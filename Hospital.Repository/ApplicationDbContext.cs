@@ -20,6 +20,7 @@ namespace Hospital.Repository
         public DbSet<tbl_Insurance> tbl_Insurance { get; set; }
         public DbSet<tbl_Contacts> tbl_Contacts { get; set; }
         public DbSet<tbl_Hospital> tbl_Hospital { get; set; }
+        public DbSet<tbl_HospitalType> tbl_HospitalType { get; set; }
         public DbSet<tbl_Rooms> tbl_Rooms { get; set; }
         public DbSet<tbl_RoomStatus> tbl_RoomStatus { get; set; }
         public DbSet<tbl_StatusType> tbl_StatusType { get; set; }
