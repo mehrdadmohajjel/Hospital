@@ -59,6 +59,24 @@ namespace Hospital.Repository
                 .HasForeignKey(d => d.ParentId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+
+
+            modelBuilder.Entity<tbl_Appointment>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                // Configure other properties as needed
+                entity.HasOne(e => e.Doctor)
+                    .WithMany(u => u.Appointments)
+                    .HasForeignKey(e => e.DoctorId)
+                    .OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(e => e.tbl_Department)
+                    .WithMany(u => u.Appointments)
+                    .HasForeignKey(e => e.DepartmentId)
+                    .OnDelete(DeleteBehavior.Restrict);
+                entity.Ignore(e => e.Patient); // Ignore the Patient navigation property
+            });
+
+
         }
 
     }

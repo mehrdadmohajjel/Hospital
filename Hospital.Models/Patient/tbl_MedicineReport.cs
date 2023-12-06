@@ -15,6 +15,6 @@ namespace Hospital.Models.Patient
         public int Quantity { get; set; }
         public DateTime ProductionDate { get; set; }
         public DateTime ExpireDate { get; set; }
-        public long CountryId { get; set; }
+        public tbl_Country Country { get; set; }
     }
 }

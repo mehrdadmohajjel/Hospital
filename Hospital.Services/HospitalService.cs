@@ -66,9 +66,9 @@ namespace Hospital.Services
         {
             var model = new HospitalInfoViewModel().ConvertHospitalViewModel(hospitalInfo);
             var selectedModel = _unitOfWork.GenericRepository<tbl_Hospital>().GetById(model.Id);
-            selectedModel.CityId =hospitalInfo.CityId;
+            selectedModel.tbl_City =hospitalInfo.tbl_City;
             selectedModel.Address = hospitalInfo.Address;
-            selectedModel.HospitalTypeId = hospitalInfo.HospitalTypeId;
+            selectedModel.HospitalType = hospitalInfo.HospitalType;
             selectedModel.Name = hospitalInfo.Name;
             _unitOfWork.GenericRepository<tbl_Hospital>().Update(selectedModel);
             _unitOfWork.Save();

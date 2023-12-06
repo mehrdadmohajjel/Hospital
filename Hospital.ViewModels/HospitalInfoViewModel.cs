@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hospital.Models;
 using Hospital.Models.Hospital;
 
 namespace Hospital.ViewModels
@@ -15,14 +16,16 @@ namespace Hospital.ViewModels
         public long Id { get; set; }
         [DisplayName("نام")]
         public string Name { get; set; }
-        [DisplayName("نوع بیمارستان")]
-        public string HospitalType { get; set; }
-        public long HospitalTypeId { get; set; }
-        [DisplayName("شهر")]
-        public string City { get; set; }
-        public long CityId { get; set; }
+        //[DisplayName("نوع بیمارستان")]
+        //public string HospitalType { get; set; }
+        //public long HospitalTypeId { get; set; }
+        //[DisplayName("شهر")]
+        //public string City { get; set; }
+        //public long CityId { get; set; }
         [DisplayName("آدرس")]
         public string Address { get; set; }
+        public tbl_City tbl_City { get; set; }
+        public tbl_HospitalType HospitalType { get; set; }
 
         public HospitalInfoViewModel()
         {
@@ -33,8 +36,8 @@ namespace Hospital.ViewModels
         {
             Id = model.Id;
             Address = model.Address;
-            City = model.tbl_City.Name.ToString();
-            HospitalType = model.HospitalType.ShowName;
+            tbl_City = model.tbl_City;
+            HospitalType = model.HospitalType;
             Name = model.Name;
 
         }
@@ -44,8 +47,8 @@ namespace Hospital.ViewModels
             {
                 Id = model.Id,
                 Address = model.Address,
-                CityId = model.CityId,
-                HospitalTypeId = model.HospitalTypeId,
+                tbl_City = model.tbl_City,
+                HospitalType = model.HospitalType,
                 Name = model.Name,
             };
         }

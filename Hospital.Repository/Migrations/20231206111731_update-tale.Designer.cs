@@ -4,6 +4,7 @@ using Hospital.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hospital.Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231206111731_update-tale")]
+    partial class updatetale
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,11 +113,14 @@ namespace Hospital.Repository.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long?>("DepartmentId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("HospitalId")
+                    b.Property<long?>("HospitalId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Phone")
@@ -197,7 +202,7 @@ namespace Hospital.Repository.Migrations
                     b.Property<int?>("Floor")
                         .HasColumnType("int");
 
-                    b.Property<long>("HospitalId")
+                    b.Property<long?>("HospitalId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("RoomNumber")
@@ -227,6 +232,16 @@ namespace Hospital.Repository.Migrations
 
                     b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
+
+                    b.Property<long?>("RoomId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("StatusTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("tbl_RoomsId")
                         .HasColumnType("int");
@@ -356,7 +371,7 @@ namespace Hospital.Repository.Migrations
                     b.Property<DateTime?>("CreateionDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("DepartmentId")
+                    b.Property<long?>("DepartmentId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Description")
@@ -365,20 +380,27 @@ namespace Hospital.Repository.Migrations
 
                     b.Property<string>("DoctorId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Number")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("PatientId")
+                    b.Property<string>("PatientId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("tbl_DepartmentId")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("tbl_UserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DepartmentId");
+                    b.HasIndex("tbl_DepartmentId");
 
-                    b.HasIndex("DoctorId");
+                    b.HasIndex("tbl_UserId");
 
                     b.ToTable("tbl_Appointment");
                 });
@@ -810,9 +832,7 @@ namespace Hospital.Repository.Migrations
                 {
                     b.HasOne("Hospital.Models.Hospital.tbl_Hospital", "Hospital")
                         .WithMany("Contacts")
-                        .HasForeignKey("HospitalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("HospitalId");
 
                     b.HasOne("Hospital.Models.tbl_Department", "tbl_Department")
                         .WithMany("Contacts")
@@ -848,9 +868,7 @@ namespace Hospital.Repository.Migrations
                 {
                     b.HasOne("Hospital.Models.Hospital.tbl_Hospital", "Hospital")
                         .WithMany("Rooms")
-                        .HasForeignKey("HospitalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("HospitalId");
 
                     b.Navigation("Hospital");
                 });
@@ -912,19 +930,17 @@ namespace Hospital.Repository.Migrations
                 {
                     b.HasOne("Hospital.Models.tbl_Department", "tbl_Department")
                         .WithMany("Appointments")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("tbl_DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Hospital.Models.tbl_User", "Doctor")
+                    b.HasOne("Hospital.Models.tbl_User", "tbl_User")
                         .WithMany("Appointments")
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Doctor");
+                        .HasForeignKey("tbl_UserId");
 
                     b.Navigation("tbl_Department");
+
+                    b.Navigation("tbl_User");
                 });
 
             modelBuilder.Entity("Hospital.Models.tbl_City", b =>
