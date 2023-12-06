@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hospital.Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231205094245_some-change-department")]
-    partial class somechangedepartment
+    [Migration("20231206092220_some-changes-2")]
+    partial class somechanges2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -801,9 +801,6 @@ namespace Hospital.Repository.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("DepartmentId")
-                        .HasColumnType("bigint");
-
                     b.Property<int>("GenderType")
                         .HasColumnType("int");
 
@@ -813,8 +810,6 @@ namespace Hospital.Repository.Migrations
 
                     b.Property<long>("NationalityId")
                         .HasColumnType("bigint");
-
-                    b.HasIndex("DepartmentId");
 
                     b.HasDiscriminator().HasValue("tbl_User");
                 });
@@ -1061,17 +1056,6 @@ namespace Hospital.Repository.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Hospital.Models.tbl_User", b =>
-                {
-                    b.HasOne("Hospital.Models.tbl_Department", "Department")
-                        .WithMany()
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Department");
                 });
 
             modelBuilder.Entity("Hospital.Models.Bill.tbl_Insurance", b =>

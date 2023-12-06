@@ -18,7 +18,6 @@ namespace Hospital.Models
         public string Address { get; set; }
         public DateTime BirthDate { get; set; }
         
-        public tbl_Department Department { get; set; }
         public ICollection<tbl_Appointment> Appointments { get; set; }
         public ICollection<tbl_RoomStatus> RoomStatus { get; set; }
         //public ICollection<tbl_PayRoll> PayRolls { get; set; }
