@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Views\Hospital\" />
     <Folder Include="Areas\Doctor\Views\" />
     <Folder Include="Areas\Patient\Views\" />
   </ItemGroup>

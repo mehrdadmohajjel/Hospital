@@ -14,10 +14,10 @@ namespace Hospital.Web.Areas.Admin.Controllers
             _hospitalService = hospitalService;
         }
 
-        //public IActionResult Index(int pageNumber = 1, int pageSize = 10)
-        //{
-        //    return View(_hospitalService.GetAll(pageNumber, pageSize));
-        //}
+        public IActionResult Index(int pageNumber = 1, int pageSize = 10)
+        {
+            return View(_hospitalService.GetAll(pageNumber, pageSize));
+        }
 
         //[HttpGet]
         //public IActionResult Edit(long Id)
@@ -52,6 +52,12 @@ namespace Hospital.Web.Areas.Admin.Controllers
         {
             _hospitalService.InsertHospitalInfo(vm);
             return RedirectToAction("Index");
+        }
+
+        public IActionResult Detail(long Id)
+        {
+            var viewModel = _hospitalService.GetHospitalById(Id);
+            return View(viewModel);
         }
     }
 }
