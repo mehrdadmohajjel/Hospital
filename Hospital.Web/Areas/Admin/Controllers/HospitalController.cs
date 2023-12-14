@@ -19,12 +19,12 @@ namespace Hospital.Web.Areas.Admin.Controllers
             return View(_hospitalService.GetAll(pageNumber, pageSize));
         }
 
-        //[HttpGet]
-        //public IActionResult Edit(long Id)
-        //{
-        //    var viewModel = _hospitalService.GetHospitalById(Id);
-        //    return View(viewModel);
-        //}
+        [HttpGet]
+        public IActionResult Edit(long Id)
+        {
+            var viewModel = _hospitalService.GetHospitalById(Id);
+            return View(viewModel);
+        }
         [HttpPost]
         public IActionResult Edit(HospitalInfoViewModel vm)
         {
@@ -42,11 +42,11 @@ namespace Hospital.Web.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        //[HttpGet]
-        //public IActionResult Create()
-        //{
-        //        return View();
-        //}
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
         [HttpPost]
         public IActionResult Create(HospitalInfoViewModel vm)
         {

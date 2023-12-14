@@ -125,11 +125,14 @@ namespace Hospital.Repository.Migrations
                     b.Property<long>("tbl_DepartmentId")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("tbl_HospitalId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("HospitalId");
-
                     b.HasIndex("tbl_DepartmentId");
+
+                    b.HasIndex("tbl_HospitalId");
 
                     b.ToTable("tbl_Contacts");
                 });
@@ -156,11 +159,14 @@ namespace Hospital.Repository.Migrations
                     b.Property<long>("tbl_CityId")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("tbl_HospitalTypeId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("HospitalTypeId");
-
                     b.HasIndex("tbl_CityId");
+
+                    b.HasIndex("tbl_HospitalTypeId");
 
                     b.ToTable("tbl_Hospital");
                 });
@@ -207,9 +213,12 @@ namespace Hospital.Repository.Migrations
                     b.Property<int?>("RoomeType")
                         .HasColumnType("int");
 
+                    b.Property<long>("tbl_HospitalId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("HospitalId");
+                    b.HasIndex("tbl_HospitalId");
 
                     b.ToTable("tbl_Rooms");
                 });
@@ -235,6 +244,7 @@ namespace Hospital.Repository.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("tbl_UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -288,7 +298,8 @@ namespace Hospital.Repository.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PatientId")
-                        .HasColumnType("nvarchar(450)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Temprature")
                         .HasColumnType("decimal(18,2)");
@@ -309,8 +320,6 @@ namespace Hospital.Repository.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PatientId");
 
                     b.ToTable("tbl_Lab");
                 });
@@ -336,11 +345,17 @@ namespace Hospital.Repository.Migrations
                     b.Property<decimal>("TestPrice")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<long>("tbl_BillId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("tbl_LabId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("BillId");
+                    b.HasIndex("tbl_BillId");
 
-                    b.HasIndex("LabId");
+                    b.HasIndex("tbl_LabId");
 
                     b.ToTable("tbl_TestPrice");
                 });
@@ -391,11 +406,11 @@ namespace Hospital.Repository.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<string>("Code")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("PhoneCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -503,11 +518,11 @@ namespace Hospital.Repository.Migrations
 
             modelBuilder.Entity("Hospital.Models.tbl_States", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("StateId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StateId"), 1L, 1);
 
                     b.Property<long>("CountryId")
                         .HasColumnType("bigint");
@@ -516,9 +531,12 @@ namespace Hospital.Repository.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<long>("tbl_CountryId")
+                        .HasColumnType("bigint");
 
-                    b.HasIndex("CountryId");
+                    b.HasKey("StateId");
+
+                    b.HasIndex("tbl_CountryId");
 
                     b.ToTable("tbl_States");
                 });
@@ -808,51 +826,51 @@ namespace Hospital.Repository.Migrations
 
             modelBuilder.Entity("Hospital.Models.Hospital.tbl_Contacts", b =>
                 {
-                    b.HasOne("Hospital.Models.Hospital.tbl_Hospital", "Hospital")
-                        .WithMany("Contacts")
-                        .HasForeignKey("HospitalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Hospital.Models.tbl_Department", "tbl_Department")
                         .WithMany("Contacts")
                         .HasForeignKey("tbl_DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Hospital");
+                    b.HasOne("Hospital.Models.Hospital.tbl_Hospital", "tbl_Hospital")
+                        .WithMany("tbl_Contacts")
+                        .HasForeignKey("tbl_HospitalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("tbl_Department");
+
+                    b.Navigation("tbl_Hospital");
                 });
 
             modelBuilder.Entity("Hospital.Models.Hospital.tbl_Hospital", b =>
                 {
-                    b.HasOne("Hospital.Models.Hospital.tbl_HospitalType", "HospitalType")
-                        .WithMany("Hospital")
-                        .HasForeignKey("HospitalTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Hospital.Models.tbl_City", "tbl_City")
                         .WithMany("tbl_Hospital")
                         .HasForeignKey("tbl_CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("HospitalType");
+                    b.HasOne("Hospital.Models.Hospital.tbl_HospitalType", "tbl_HospitalType")
+                        .WithMany("tbl_Hospital")
+                        .HasForeignKey("tbl_HospitalTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("tbl_City");
+
+                    b.Navigation("tbl_HospitalType");
                 });
 
             modelBuilder.Entity("Hospital.Models.Hospital.tbl_Rooms", b =>
                 {
-                    b.HasOne("Hospital.Models.Hospital.tbl_Hospital", "Hospital")
-                        .WithMany("Rooms")
-                        .HasForeignKey("HospitalId")
+                    b.HasOne("Hospital.Models.Hospital.tbl_Hospital", "tbl_Hospital")
+                        .WithMany("tbl_Rooms")
+                        .HasForeignKey("tbl_HospitalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Hospital");
+                    b.Navigation("tbl_Hospital");
                 });
 
             modelBuilder.Entity("Hospital.Models.Hospital.tbl_RoomStatus", b =>
@@ -869,43 +887,34 @@ namespace Hospital.Repository.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Hospital.Models.tbl_User", "tbl_User")
+                    b.HasOne("Hospital.Models.tbl_User", null)
                         .WithMany("RoomStatus")
-                        .HasForeignKey("tbl_UserId");
+                        .HasForeignKey("tbl_UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("tbl_Rooms");
 
                     b.Navigation("tbl_StatusType");
-
-                    b.Navigation("tbl_User");
-                });
-
-            modelBuilder.Entity("Hospital.Models.Lab.tbl_Lab", b =>
-                {
-                    b.HasOne("Hospital.Models.tbl_User", "Patient")
-                        .WithMany()
-                        .HasForeignKey("PatientId");
-
-                    b.Navigation("Patient");
                 });
 
             modelBuilder.Entity("Hospital.Models.Lab.tbl_TestPrice", b =>
                 {
-                    b.HasOne("Hospital.Models.Bill.tbl_Bill", "Bill")
+                    b.HasOne("Hospital.Models.Bill.tbl_Bill", "tbl_Bill")
                         .WithMany()
-                        .HasForeignKey("BillId")
+                        .HasForeignKey("tbl_BillId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Hospital.Models.Lab.tbl_Lab", "Lab")
-                        .WithMany()
-                        .HasForeignKey("LabId")
+                    b.HasOne("Hospital.Models.Lab.tbl_Lab", "tbl_Lab")
+                        .WithMany("tbl_TestPrice")
+                        .HasForeignKey("tbl_LabId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Bill");
+                    b.Navigation("tbl_Bill");
 
-                    b.Navigation("Lab");
+                    b.Navigation("tbl_Lab");
                 });
 
             modelBuilder.Entity("Hospital.Models.Patient.tbl_Appointment", b =>
@@ -929,13 +938,13 @@ namespace Hospital.Repository.Migrations
 
             modelBuilder.Entity("Hospital.Models.tbl_City", b =>
                 {
-                    b.HasOne("Hospital.Models.tbl_States", "State")
-                        .WithMany("Cities")
+                    b.HasOne("Hospital.Models.tbl_States", "tbl_States")
+                        .WithMany("tbl_City")
                         .HasForeignKey("StateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("State");
+                    b.Navigation("tbl_States");
                 });
 
             modelBuilder.Entity("Hospital.Models.tbl_Department", b =>
@@ -970,13 +979,13 @@ namespace Hospital.Repository.Migrations
 
             modelBuilder.Entity("Hospital.Models.tbl_States", b =>
                 {
-                    b.HasOne("Hospital.Models.tbl_Country", "Country")
-                        .WithMany("States")
-                        .HasForeignKey("CountryId")
+                    b.HasOne("Hospital.Models.tbl_Country", "tbl_Country")
+                        .WithMany("tbl_States")
+                        .HasForeignKey("tbl_CountryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Country");
+                    b.Navigation("tbl_Country");
                 });
 
             modelBuilder.Entity("Hospital.Models.tbl_Supplier", b =>
@@ -1048,14 +1057,14 @@ namespace Hospital.Repository.Migrations
 
             modelBuilder.Entity("Hospital.Models.Hospital.tbl_Hospital", b =>
                 {
-                    b.Navigation("Contacts");
+                    b.Navigation("tbl_Contacts");
 
-                    b.Navigation("Rooms");
+                    b.Navigation("tbl_Rooms");
                 });
 
             modelBuilder.Entity("Hospital.Models.Hospital.tbl_HospitalType", b =>
                 {
-                    b.Navigation("Hospital");
+                    b.Navigation("tbl_Hospital");
                 });
 
             modelBuilder.Entity("Hospital.Models.Hospital.tbl_Rooms", b =>
@@ -1068,6 +1077,11 @@ namespace Hospital.Repository.Migrations
                     b.Navigation("tbl_RoomStatus");
                 });
 
+            modelBuilder.Entity("Hospital.Models.Lab.tbl_Lab", b =>
+                {
+                    b.Navigation("tbl_TestPrice");
+                });
+
             modelBuilder.Entity("Hospital.Models.tbl_City", b =>
                 {
                     b.Navigation("tbl_Hospital");
@@ -1077,7 +1091,7 @@ namespace Hospital.Repository.Migrations
 
             modelBuilder.Entity("Hospital.Models.tbl_Country", b =>
                 {
-                    b.Navigation("States");
+                    b.Navigation("tbl_States");
                 });
 
             modelBuilder.Entity("Hospital.Models.tbl_Department", b =>
@@ -1091,7 +1105,7 @@ namespace Hospital.Repository.Migrations
 
             modelBuilder.Entity("Hospital.Models.tbl_States", b =>
                 {
-                    b.Navigation("Cities");
+                    b.Navigation("tbl_City");
                 });
 
             modelBuilder.Entity("Hospital.Models.tbl_User", b =>

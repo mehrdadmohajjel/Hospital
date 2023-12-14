@@ -36,6 +36,7 @@ namespace Hospital.Repository
         {
             base.OnModelCreating(modelBuilder);
 
+
             modelBuilder.Entity<tbl_PayRoll>(entity =>
             {
                 entity.HasKey(e => e.Id);

@@ -48,10 +48,11 @@ namespace Hospital.Services
             return result;
         }
 
-        public tbl_Hospital GetHospitalById(long HospitalId)
+        public HospitalInfoViewModel GetHospitalById(long HospitalId)
         {
             var model = _unitOfWork.GenericRepository<tbl_Hospital>().GetById(HospitalId);
-            return model;
+            var vm = new HospitalInfoViewModel(model);
+            return vm;
         }
 
         public void InsertHospitalInfo(HospitalInfoViewModel hospitalInfo)
@@ -65,9 +66,9 @@ namespace Hospital.Services
         {
             var model = new HospitalInfoViewModel().ConvertHospitalViewModel(hospitalInfo);
             var selectedModel = _unitOfWork.GenericRepository<tbl_Hospital>().GetById(model.Id);
-            selectedModel.tbl_City =hospitalInfo.tbl_City;
+            selectedModel.tbl_City = hospitalInfo.tbl_City;
             selectedModel.Address = hospitalInfo.Address;
-            selectedModel.HospitalType = hospitalInfo.HospitalType;
+            selectedModel.tbl_HospitalType = hospitalInfo.HospitalType;
             selectedModel.Name = hospitalInfo.Name;
             _unitOfWork.GenericRepository<tbl_Hospital>().Update(selectedModel);
             _unitOfWork.Save();

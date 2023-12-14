@@ -1,7 +1,7 @@
 ﻿@model Hospital.Models.Hospital.tbl_Hospital
 
 @{
-    ViewData["Title"] = "Detail";
+    ViewData["Title"] = "جزئیات" + Model.Name;
 }
 
 <h1>Detail</h1>
@@ -31,6 +31,6 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("ویرایش", "Edit", new {  id = Model.Id  }) |
     <a asp-action="Index">Back to List</a>
 </div>

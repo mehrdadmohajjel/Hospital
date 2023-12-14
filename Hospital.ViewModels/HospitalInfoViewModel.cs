@@ -36,21 +36,25 @@ namespace Hospital.ViewModels
         {
             Id = model.Id;
             Address = model.Address;
-            tbl_City = model.tbl_City;
-            HospitalType = model.HospitalType;
             Name = model.Name;
-
+            HospitalType = model.tbl_HospitalType;
+            tbl_City = model.tbl_City;
         }
         public tbl_Hospital ConvertHospitalViewModel(HospitalInfoViewModel model)
         {
-            return new tbl_Hospital
+            return new  tbl_Hospital
             {
                 Id = model.Id,
                 Address = model.Address,
+                Name = model.Name, 
+                tbl_HospitalType = model.HospitalType,
                 tbl_City = model.tbl_City,
-                HospitalType = model.HospitalType,
-                Name = model.Name,
-            };
+
+            } ;
+
+
+
         }
+
     }
 }
